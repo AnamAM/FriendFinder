@@ -67,7 +67,7 @@
 
               <div class="form-group">
                 <label for="">Link to Photo:</label>
-                <input type="text" class="form-control" id="phone" required>
+                <input type="text" class="form-control" id="picture" required>
               </div>
 
               <h3>Question 1</h3>
@@ -199,7 +199,7 @@
       event.preventDefault();
       var newFriend = {
         name: $("#name").val().trim(),
-        photo: $("#phone").val().trim(),
+        photo: $("#picture").val().trim(),
         preferences: [$("#question1").val(), $("#question2").val(), $("#question3").val(), $("#question4").val(), $("#question5").val(), $("#question6").val(), $("#question7").val(), $("#question8").val(), $("#question9").val(), $("#question10").val()]
       };
       $("#friend-form").html("Thank you for taking the survery! Connect with your new friend!");
