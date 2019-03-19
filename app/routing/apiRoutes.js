@@ -1,24 +1,37 @@
-var path = require("path");
+var friendsList = require("../data/friends");
 
-var friendsData = require("../data/friends.js");
+module.exports = function(app){
+	app.get("api/friends", function(req, res){
+		res.json(friendsList);
+	})
 
-module.exports = function (app) {
+// Create New Characters - takes in JSON input
+app.post("/api/friends", function(req, res) {
+	var newFriend = req.body;
+	var newScore = 0;
+	var total = 0;
+	var match = {
+		name: "",
+		photo: "",
+		difference: 10000
+	}
 
-    app.get("/api/friends", function (request, response) {
-        return response.json(friendsData);
-    });
+	// Calculating totals 
+	for (var i = 0; i < friendsList.length; i++) {
+		total = 0;
 
-    app.post("/api/friends", function (request, response) {
+		for (var j = 0; j < friendsList[i].preferences.length; j++) {
+			total += Math.abs(friendsList[i].preferences[j] - newFriend.preferences[j]);
 
-        var friendScore = request.body.scores;
-        var scoreArray = [];
-        var friendMatch = 0;
-
-        // create variables to hold results from the survey 
-        // compare the scores with other users to see who's scores matched 
-        // get the user's difference by using subraction and create for loops
-
-
-        friendsData.push(request.body);
-})
+			if (total <= match.difference) {
+				match.name = friendsList[i].name,
+				match.photo = friendsList[i].photo,
+				match.difference = total
+			}
+    	}
+    }
+    friendsList.push(newFriend);
+    res.json(match);
+    console.log(match);
+});
 }
